@@ -16,7 +16,7 @@ class AuthController extends Controller
 
     public function getUsers()
     {
-        $user = User::find('id' === 1)->get();
+        $user = User::all();
         return $user;
         // return view('login');
     }
