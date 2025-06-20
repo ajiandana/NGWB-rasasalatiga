@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\AdminResto;
 
-use App\Http\Controllers\Controller;
+use App\Models\RestoSlider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SliderController extends Controller
 {
@@ -12,7 +14,8 @@ class SliderController extends Controller
      */
     public function index()
     {
-        //
+        $sliders = RestoSlider::where('resto_id', Auth::user()->resto_id)->get();
+        return view('admin-resto.sliders.index');
     }
 
     /**
@@ -20,7 +23,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin-resto.sliders.create');
     }
 
     /**
@@ -28,7 +31,12 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title'=>'required|max:255',
+            'image'=>'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        
     }
 
     /**

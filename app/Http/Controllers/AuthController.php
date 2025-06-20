@@ -13,6 +13,12 @@ class AuthController extends Controller
     {
         return view('login');
     }
+
+    public function getUsers()
+    {
+        $user = User::all();
+        // return view('login');
+    }
     
     public function login(Request $request)
     {

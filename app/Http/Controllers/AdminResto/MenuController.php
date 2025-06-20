@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\AdminResto;
 
-use App\Http\Controllers\Controller;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Menu;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
@@ -12,7 +16,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        
+        $menus = Menu::where('resto_id', Auth::user()->resto_id)->get();
+        return view('adminresto.menu.index', compact('menus'));
     }
 
     /**
@@ -20,7 +25,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('adminresto.menu.create');
     }
 
     /**
@@ -28,7 +33,25 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name'=>'required|max:100',
+            'category'=>'required|in:Main Course,Beverage,Others',
+            'description'=>'required|max:255',
+            'image'=>'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $imagePath = $request->file('image')->store('resto/images', 'public');
+
+        $updatedData['image'] = basename($imagePath);
+
+        Menu::create(['resto_id'=>Auth::user()->resto_id,
+        'name' => $validated['name'],
+        'category' => $validated['category'],
+        'description' => $validated['description'],
+        'image' => $validated['image']
+        ]);
+
+        return redirect()->route('menus.index')->with('success', 'Menu created successfully');
     }
 
     /**
@@ -36,7 +59,7 @@ class MenuController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // return
     }
 
     /**
@@ -44,7 +67,8 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOdFail($id);
+        return view('admin-resto.menus.edit', compact('menu'));
     }
 
     /**
@@ -52,7 +76,31 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOdFail($id);
+
+        $validated = $request->validate([
+            'name'=>'required|max:100',
+            'category'=>'required|in:Main Course,Beverage,Others',
+            'description'=>'required|max:255',
+            'image'=>'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $updatedData = [
+        'name' => $validated['name'],
+        'category' => $validated['category'],
+        'description' => $validated['description']
+        ];
+
+        if($request->hasFile('image')){
+            if($menu->image&&Storage::disk('public')->exists('menus/'.$menu->image)){
+                Storage::disk('public')->delete('menus/'.$menu->image);
+            }
+            $imagePath = $request->file('image')->store('menus', 'public');
+            $updateData['image'] = basename($imagePath);
+        }
+        $menu->update($updateData);
+        return redirect()->route('menus.index')->with('success', 'Menu updated successfully!');
+        
     }
 
     /**
@@ -60,6 +108,13 @@ class MenuController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOdFail($id);
+        if($menu->image&&Storage::disk('public')->exists('menus/'.$menu->image)){
+            Storage::disk('public')->delete('menus/'.$menu->image);
+        }
+
+        $menu->delete();
+
+        return redirect()->route('menus.index')->with('success', 'Menu deleted successfully!');
     }
 }
