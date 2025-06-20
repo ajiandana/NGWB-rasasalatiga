@@ -10,7 +10,7 @@ class RestaurantController extends Controller
 {
     public function index()
     {
-        $restaurant = Restaurant::latest()->paginate(10);
+        $restaurants = Restaurant::latest()->paginate(10);
         return view('super-admin.restaurants.index', compact('restaurants'));
     }
 
@@ -39,12 +39,12 @@ class RestaurantController extends Controller
 
     public function show(Restaurant $restaurant)
     {
-        return view('super-admin.restaurants.show', compact('restaurants'));
+        return view('super-admin.restaurants.show', compact('restaurant'));
     }
 
     public function edit(Restaurant $restaurant)
     {
-        return view('super-admin.restaurants.edit', compact('restaurants'));
+        return view('super-admin.restaurants.edit', compact('restaurant'));
     }
 
     public function update(Request $request, Restaurant $restaurant)

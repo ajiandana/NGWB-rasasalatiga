@@ -17,7 +17,7 @@ class MenuController extends Controller
     public function index()
     {
         $menus = Menu::where('resto_id', Auth::user()->resto_id)->get();
-        return view('adminresto.menu.index', compact('menus'));
+        return view('admin-resto.menus.index', compact('menus'));
     }
 
     /**
@@ -25,7 +25,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('adminresto.menu.create');
+        return view('admin-resto.menus.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class MenuController extends Controller
             'image'=>'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $imagePath = $request->file('image')->store('resto/images', 'public');
+        $imagePath = $request->file('image')->store('menus', 'public');
 
         $updatedData['image'] = basename($imagePath);
 
@@ -67,7 +67,7 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
-        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOdFail($id);
+        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOrFail($id);
         return view('admin-resto.menus.edit', compact('menu'));
     }
 
@@ -76,7 +76,7 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOdFail($id);
+        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOrFail($id);
 
         $validated = $request->validate([
             'name'=>'required|max:100',
@@ -108,7 +108,7 @@ class MenuController extends Controller
      */
     public function destroy(string $id)
     {
-        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOdFail($id);
+        $menu = Menu::where('resto_id', Auth::user()->resto_id)->findOrFail($id);
         if($menu->image&&Storage::disk('public')->exists('menus/'.$menu->image)){
             Storage::disk('public')->delete('menus/'.$menu->image);
         }

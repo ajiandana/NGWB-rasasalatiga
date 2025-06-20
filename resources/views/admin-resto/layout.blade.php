@@ -10,14 +10,14 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('admin-resto.dashboard') }}">{{ auth()->user()->restaurant->name }}</a>
+            <a class="navbar-brand" href="{{ route('admin-resto.dashboard.index') }}">{{ auth()->user()->restaurant->name }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin-resto.dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ route('admin-resto.dashboard.index') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('menus.index') }}">Menu</a>

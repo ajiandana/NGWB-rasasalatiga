@@ -12,9 +12,9 @@ class OperationalController extends Controller
 {
     public function index()
     {
-        $resto = Restaurant::finOrFail(Auth::user()->resto_id);
+        $resto = Restaurant::findOrFail(Auth::user()->resto_id);
 
-        $operarionals = RestoOperational::where('resto_id', Auth::user()->resto_id)
+        $operationals = RestoOperational::where('resto_id', Auth::user()->resto_id)
             ->orderByRaw("FIELD(days, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')")->get();
 
         return view('admin-resto.operational.index', compact('resto', 'operationals'));

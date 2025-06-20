@@ -1,14 +1,14 @@
 @extends('admin-resto.layout')
 
-@section('title', 'Manage Menus')
+@section('title', 'Manage Sliders')
 
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5>Menu List</h5>
-                <a href="{{ route('menus.create') }}" class="btn btn-primary">Add New Menu</a>
+                <h5>Slider List</h5>
+                <a href="{{ route('slideresto.create') }}" class="btn btn-primary">Add New Slider</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -17,25 +17,21 @@
                             <tr>
                                 <th>#</th>
                                 <th>Image</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Description</th>
+                                <th>Title</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($menus as $menu)
+                            @foreach($sliders as $slider)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/menus/' . $menu->image) }}" alt="{{ $menu->name }}" width="80">
+                                    <img src="{{ asset('storage/resto/sliders/' . $slider->image) }}" alt="{{ $slider->title }}" width="150">
                                 </td>
-                                <td>{{ $menu->name }}</td>
-                                <td>{{ $menu->category }}</td>
-                                <td>{{ Str::limit($menu->description, 50) }}</td>
+                                <td>{{ $slider->title }}</td>
                                 <td>
-                                    <a href="{{ route('menus.edit', $menu->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ route('menus.destroy', $menu->id) }}" method="POST" class="d-inline">
+                                    <a href="{{ route('slideresto.edit', $slider->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <form action="{{ route('slideresto.destroy', $slider->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>

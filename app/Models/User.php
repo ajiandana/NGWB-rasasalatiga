@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Menu;
+use App\Models\LikedMenu;
+use App\Models\Restaurant;
+use App\Models\RestoSlider;
+use App\Models\RestoOperational;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -67,11 +72,11 @@ class User extends Authenticatable
 
         public function r_sliders()
     {
-        return $this->hasMany(RSlider::class);
+        return $this->hasMany(RestoSlider::class);
     }
 
     public function operational_hours()
     {
-        return $this->hasMany(ROperational::class);
+        return $this->hasMany(RestoOperational::class);
     }
 }

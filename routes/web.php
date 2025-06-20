@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminResto\MenuController;
 use App\Http\Controllers\SuperAdmin\UserController;
 use App\Http\Controllers\SuperAdmin\AboutController;
@@ -17,11 +18,11 @@ use App\Http\Controllers\AdminResto\DashboardController as DCAR;
 //     return view('welcome');
 // });
 
-// Route::get('/', [HomeController::class, 'index'])->name('home');
-// Route::get('/restaurants/{id}', [HomeController::class, 'show'])
-//     ->name('restaurant.show');
-// Route::post('/menus/{id}/like', [HomeController::class, 'like'])
-//     ->name('menu.like');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/restaurants/{id}', [HomeController::class, 'show'])
+    ->name('restaurant.show');
+Route::post('/menus/{id}/like', [HomeController::class, 'like'])
+    ->name('menu.like');
 
 // Route::get('/', [AuthController::class, 'getUsers']);
 Route::get('/login', [AuthController::class, 'loginPage'])->name('login');

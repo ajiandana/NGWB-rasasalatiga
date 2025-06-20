@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Menu;
+use App\Models\User;
+use App\Models\RestoSlider;
+use App\Models\RestoOperational;
 use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
@@ -26,12 +30,12 @@ class Restaurant extends Model
 
     public function operationalHours()
     {
-        return $this->hasMany(ROperational::class, 'resto_id');
+        return $this->hasMany(RestoOperational::class, 'resto_id');
     }
 
     public function sliders()
     {
-        return $this->hasMany(RSlider::class, 'resto_id');
+        return $this->hasMany(RestoSlider::class, 'resto_id');
     }
 
     protected $casts = [
