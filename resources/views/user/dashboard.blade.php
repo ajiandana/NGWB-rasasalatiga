@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 @extends('layouts.app')
 @section('title','SalatigaRasa - Discover Best Restaurants')
 @section('content')
