@@ -30,7 +30,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('admin-resto')->middleware(['auth', 'adminresto'])->group(function () {
     Route::get('/dahsboard-admin-resto', [DCAR::class, 'index'])->name('admin-resto.dashboard.index');
-    Route::resource('menus', [MenuController::class]);
+    Route::resource('menus', MenuController::class);
     Route::get('/operational', [OperationalController::class, 'index'])->name('admin-resto.operational.index');
     Route::put('/operational', [OperationalController::class, 'update'])->name('admin-resto.operational.update');
     Route::get('/about-resto', [ACAR::class, 'edit'])->name('admin-resto.about.edit');

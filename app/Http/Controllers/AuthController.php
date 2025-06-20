@@ -24,11 +24,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'emaiil'=>'required|email',
-            'password'=>'required|password',
+            'email'=>'required|email',
+            'password'=>'required|string',
         ]);
         
-        $user = User::where('email', $request->email)->firts();
+        $user = User::where('email', $request->email)->first();
         
         if($user && Hash::check($request->password, $user->password)) 
         {
@@ -38,7 +38,7 @@ class AuthController extends Controller
                 case 'superadmin':
                     return redirect()->route('superadmin.dashboard');
                 case 'adminresto':
-                    return redirect()->route('admin-resto.dashboard');
+                    return redirect()->route('admin-resto.dashboard.index');
                 default:
                     return redirect()->route('login')->with('error', 'gagal login!');
             }

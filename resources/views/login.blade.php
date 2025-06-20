@@ -11,7 +11,7 @@
     <div class="flex justify-center items-center h-screen">
         <div class="bg-black bg-opacity-20 backdrop-blur-lg rounded-lg p-8 shadow-lg w-96">
             <div class="text-center text-white text-2xl font-bold mb-4">Silahkan Login</div>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login.submit') }}">
                 @csrf
                 <div class="mb-4">
                     <label for="email" class="block text-white">Email</label>
